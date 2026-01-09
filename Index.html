@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Hira!</title>
+    <style>
+        /* CSS STYLES - The Look and Feel */
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Nunito', sans-serif;
+            color: #5c3a45;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 90%;
+            width: 400px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s, background 0.2s;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #ff4757;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Input styling */
+        input {
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #ff9a9e;
+            width: 70%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        /* Animations */
+        .floating-heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 20px;
+            animation: float Up 5s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+
+        .pulse {
+            animation: pulse-animation 2s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Balloon popping game */
+        .balloon {
+            width: 50px;
+            height: 60px;
+            background-color: #ff6b6b;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            user-select: none;
+        }
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            width: 2px;
+            height: 15px;
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="container">
+        <h1>Hey Hira! 🎂</h1>
+        <p>I made something special just for you.</p>
+        <div class="pulse" style="font-size: 4rem;">💌</div>
+        <p>Are you ready to open your surprise?</p>
+        <button class="btn" onclick="nextPage('page2')">Yes, I'm ready!</button>
+    </div>
+
+    <div id="page2" class="container hidden">
+        <h1>Security Check 🔒</h1>
+        <p>Just to make sure it's really you...</p>
+        <p>Where did we first meet? (Or type 'love' to skip)</p>
+        <input type="text" id="answer" placeholder="Type here...">
+        <br>
+        <button class="btn" onclick="checkAnswer()">Unlock</button>
+        <p id="error-msg" style="color:red; font-size:0.9rem; display:none;">Try again, cutie! 😉</p>
+    </div>
+
+    <div id="page3" class="container hidden" style="background:none; box-shadow:none;">
+        <div style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 20px;">
+            <h1>Pop the Balloons! 🎈</h1>
+            <p>Pop 5 hearts to continue!</p>
+            <h2 id="score">Score: 0</h2>
+        </div>
+        </div>
+
+    <div id="page4" class="container hidden">
+        <h1>3 Things I Love About You 💖</h1>
+        <p onclick="reveal(1)" style="cursor:pointer; border:1px dashed #ff6b6b; padding:10px; border-radius:10px;">1. Tap to reveal...</p>
+        <p id="r1" class="hidden" style="color:#ff4757; font-weight:bold;">Your beautiful smile 😊</p>
+        
+        <p onclick="reveal(2)" style="cursor:pointer; border:1px dashed #ff6b6b; padding:10px; border-radius:10px;">2. Tap to reveal...</p>
+        <p id="r2" class="hidden" style="color:#ff4757; font-weight:bold;">How kind your heart is ✨</p>
+        
+        <p onclick="reveal(3)" style="cursor:pointer; border:1px dashed #ff6b6b; padding:10px; border-radius:10px;">3. Tap to reveal...</p>
+        <p id="r3" class="hidden" style="color:#ff4757; font-weight:bold;">Just being Hira! 🦋</p>
+        
+        <button id="nextBtn" class="btn hidden" onclick="nextPage('page5')">One last thing...</button>
+    </div>
+
+    <div id="page5" class="container hidden">
+        <h1>Happy Birthday! 🎉</h1>
+        <p>Dear Hira,</p>
+        <p>I hope your day is as amazing as you are. You make my world brighter just by being in it.</p>
+        <p>I love you so much! ❤️</p>
+        <div class="pulse" style="font-size: 3rem;">🎁</div>
+        <p style="font-size: 0.8rem; opacity: 0.7;">(Screenshots allowed!)</p>
+    </div>
+
+    <script>
+        /* JAVASCRIPT LOGIC */
+        
+        function nextPage(id) {
+            // Hide all pages
+            document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+            // Show specific page
+            document.getElementById(id).classList.remove('hidden');
+            
+            if(id === 'page3') {
+                startGame();
+            }
+            if(id === 'page5') {
+                createHearts();
+            }
+        }
+
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value.toLowerCase();
+            // You can change 'love' to any password you want
+            if(answer.includes('love') || answer.length > 0) { 
+                nextPage('page3');
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        // Mini Game Logic
+        let score = 0;
+        function startGame() {
+            const container = document.getElementById('page3');
+            
+            const spawner = setInterval(() => {
+                if(score >= 5) {
+                    clearInterval(spawner);
+                    // Clear balloons
+                    document.querySelectorAll('.balloon').forEach(e => e.remove());
+                    nextPage('page4');
+                    return;
+                }
+                
+                const b = document.createElement('div');
+                b.className = 'balloon';
+                b.innerHTML = '❤️';
+                b.style.left = Math.random() * 80 + 10 + '%';
+                b.style.top = '100%';
+                
+                // Random float speed
+                let speed = Math.random() * 2 + 2; 
+                b.style.transition = `top ${speed}s linear`;
+                
+                b.onclick = function() {
+                    score++;
+                    document.getElementById('score').innerText = "Score: " + score;
+                    this.remove();
+                };
+
+                container.appendChild(b);
+
+                // Trigger animation
+                setTimeout(() => {
+                    b.style.top = '-10%';
+                }, 100);
+
+                // Cleanup if missed
+                setTimeout(() => {
+                    if(b.parentNode) b.remove();
+                }, speed * 1000);
+
+            }, 800);
+        }
+
+        function reveal(num) {
+            document.getElementById('r' + num).classList.remove('hidden');
+            if(num === 3) {
+                document.getElementById('nextBtn').classList.remove('hidden');
+            }
+        }
+
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
+
